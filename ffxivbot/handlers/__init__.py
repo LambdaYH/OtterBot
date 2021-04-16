@@ -140,7 +140,7 @@ from .QQCommand_luck import QQCommand_luck
 
 # from .QQCommand_joke import QQCommand_joke
 # from .QQCommand_music import QQCommand_music
-# from .QQCommand_mxh import QQCommand_mxh
+from .QQCommand_mxh import QQCommand_mxh
 from .QQCommand_pixiv import QQCommand_pixiv
 from .QQCommand_random import QQCommand_random
 from .QQCommand_share import QQCommand_share
