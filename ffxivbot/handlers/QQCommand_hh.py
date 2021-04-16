@@ -238,7 +238,7 @@ def QQCommand_hh(*args, **kwargs):
                 for item in job_nicknames:
                     if item in receive_msg:
                         receive_msg = receive_msg.replace(item, "", 1).strip()
-                        job = jobs.id
+                        job = jobs.hh_id
                         break
                 if job:
                     break
@@ -253,7 +253,7 @@ def QQCommand_hh(*args, **kwargs):
                 for item in race_nicknames:
                     if item in receive_msg:
                         receive_msg = receive_msg.replace(item, "", 1).strip()
-                        race = races.id
+                        race = races.hh_id
                         break
                 if race:
                     break
@@ -267,7 +267,7 @@ def QQCommand_hh(*args, **kwargs):
                 for item in sex_nicknames:
                     if item in receive_msg:
                         receive_msg = receive_msg.replace(item, "", 1).strip()
-                        sex = sexs.id
+                        sex = sexs.hh_id
                         break
                 if sex:
                     break
