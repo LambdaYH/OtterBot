@@ -28,11 +28,9 @@ def is_nsfw(illust):
     return False
 
 
-def search_image(img_url, qq=None):
+def search_image(img_url, API, qq=None):
     url_img_url = urllib.parse.quote(img_url)
-    url = "https://saucenao.com/search.php?db=5&output_type=2&testmode=1&numres=16&url={}".format(
-        url_img_url
-    )
+    url = f"https://saucenao.com/search.php?db=5&output_type=2&testmode=1&numres=16&url={url_img_url}&api_key={API}"
     r = requests.get(url=url, timeout=(5, 30))
     jres = json.loads(r.text)
     print("++++++++++++++++++\n{}".format(json.dumps(jres)))
@@ -141,6 +139,7 @@ def QQCommand_pixiv(*args, **kwargs):
         QQ_BASE_URL = global_config["QQ_BASE_URL"]
         FF14WIKI_API_URL = global_config["FF14WIKI_API_URL"]
         FF14WIKI_BASE_URL = global_config["FF14WIKI_BASE_URL"]
+        SAUCENAO_API_KEY = global_config["SAUCENAO_API_KEY"]
         receive = kwargs["receive"]
         user = QQUser.objects.get(user_id=receive["user_id"])
 
@@ -180,7 +179,7 @@ def QQCommand_pixiv(*args, **kwargs):
                 tmp = tmp[tmp.find("url=") : -1]
                 tmp = tmp.replace("url=", "")
                 img_url = tmp.replace("]", "")
-                msg = search_image(img_url, receive["user_id"])
+                msg = search_image(img_url, SAUCENAO_API_KEY, receive["user_id"])
                 update_api_cooldown = True
             else:
                 word = message_content
