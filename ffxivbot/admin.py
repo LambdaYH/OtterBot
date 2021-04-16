@@ -179,7 +179,7 @@ class TreasureMapAdmin(admin.ModelAdmin):
 
 
 class ScreenAdmin(admin.ModelAdmin):
-    list_display = ("name", "id", "nickname", "classname")
+    list_display = ("name", "hh_id", "nickname", "classname")
     search_fields = ["name", "name"]
 
 

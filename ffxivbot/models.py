@@ -605,6 +605,7 @@ class TreasureMap(models.Model):
 
 class Screen(models.Model):
     name = models.CharField(default="", max_length=64, blank=True)
+    hh_id = models.IntegerField(default=0)
     nickname = models.TextField(default="{}")
     classname = models.CharField(default="", max_length=64, blank=True)
 

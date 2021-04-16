@@ -90,12 +90,12 @@ def QQCommand_hso(*args, **kwargs):
                 r = requests.get(api_url, timeout=(5, 60))
                 img_json = r.json()
 
-                if receive["message_type"] == "group":
-                    tmp_list = []
-                    for item in img_json:
-                        if item["rating"] == "s":
-                            tmp_list.append(item)
-                    img_json = tmp_list
+                # filter r18
+                tmp_list = []
+                for item in img_json:
+                    if item["rating"] == "s":
+                        tmp_list.append(item)
+                img_json = tmp_list
 
                 if not img_json:
                     msg = "未能找到所需图片"
