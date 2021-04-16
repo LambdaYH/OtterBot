@@ -18,14 +18,14 @@
       {% if user %}
         <li class="nav-item dropdown user user-menu">
           <a class="nav-link" data-toggle="dropdown" href="#">
-            <img src="{{ user.avatar }}"
+            <img src="{% if user.avatar %}{{ user.avatar }}{% else %}{% static "dist/img/xiana.jpg" %}{% endif %}"
                  class="user-image" alt="User Image">
             <span class="hidden-xs">{{ user.nickname }}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
             <!-- User image -->
             <li class="user-header bg-gray">
-              <img src="{{ user.avatar }}"
+              <img src="{% if user.avatar %}{{ user.avatar }}{% else %}{% static "dist/img/xiana.jpg" %}{% endif %}"
                    alt="User Avatar" class="img-circle align-items-center" style="width: 128px;height: auto;">
               <p class="text-center">
                 {{ user.nickname }}
@@ -45,14 +45,14 @@
       {% else %}
         <li class="nav-item dropdown user user-menu">
           <a class="nav-link" data-toggle="dropdown" href="#">
-            <img src="{% static "dist/img/tata.jpg" %}"
+            <img src="{% static "dist/img/xiana.jpg" %}"
                  class="user-image" alt="User Image">
             <span class="hidden-xs">光之呆呆</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
             <!-- User image -->
             <li class="user-header bg-gray">
-              <img src="{% static "dist/img/tata.jpg" %}"
+              <img src="{% static "dist/img/xiana.jpg" %}"
                    alt="User Avatar" class="img-circle align-items-center" style="width: 128px;height: auto;">
               <p class="text-center">
                 光之呆呆
@@ -90,7 +90,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="{% if user %}{{ user.avatar }}{% else %}{% static "dist/img/tata.jpg" %}{% endif %}"
+            <img src="{% if user %}{% if user.avatar %}{{ user.avatar }}{% else %}{% static "dist/img/xiana.jpg" %}{% endif %}{% else %}{% static "dist/img/xiana.jpg" %}{% endif %}"
                  class="img-circle" alt="User Image">
           </div>
           <div class="info">
