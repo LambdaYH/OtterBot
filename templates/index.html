@@ -18,15 +18,25 @@
       {% if user %}
         <li class="nav-item dropdown user user-menu">
           <a class="nav-link" data-toggle="dropdown" href="#">
+          {% if user.avatar %}
             <img src="{{ user.avatar }}"
                  class="user-image" alt="User Image">
+          {% else %}
+            <img src="{% static "dist/img/xiana.jpg" %}"
+                 class="user-image" alt="User Image">
+          {% endif %}
             <span class="hidden-xs">{{ user.nickname }}</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
             <!-- User image -->
             <li class="user-header bg-gray">
+            {% if user.avatar %}
               <img src="{{ user.avatar }}"
                    alt="User Avatar" class="img-circle align-items-center" style="width: 128px;height: auto;">
+            {% else %}      
+              <img src="{% static "dist/img/xiana.jpg" %}"
+                   alt="User Avatar" class="img-circle align-items-center" style="width: 128px;height: auto;">
+            {% endif %}       
               <p class="text-center">
                 {{ user.nickname }}
               </p>
