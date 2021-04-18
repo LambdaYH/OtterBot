@@ -38,13 +38,13 @@ commands = {
     "/akhr": "罗德岛公开招募",
     # "/share": "发送微博分享",
     # "/trash":"你是什么垃圾？",
-    "/shorten": "微博短链",
+    # "/shorten": "微博短链",
     "/mxh": '梅溪湖cp短打生成器（"/mxh 海德林 佐迪亚克"）',
     # "/joke":"讽刺笑话（\"/joke 996|强东|建设一流公司|程序员|公司\"）",
     "/hh": '光之收藏家幻化推荐("/hh help")',
     "/ofish": "获取最近海钓航班",
     "/luck": "浅草寺求签",
-    #"/abv": "Bilibili av/BV号互转",
+    # "/abv": "Bilibili av/BV号互转",
 }
 
 group_commands = {
@@ -122,7 +122,7 @@ from .QQCommand_genshin import QQCommand_genshin
 # Universal Commands
 from .QQCommand_10 import QQCommand_10
 from .QQCommand_about import QQCommand_about
-from .QQCommand_abv import QQCommand_abv
+# from .QQCommand_abv import QQCommand_abv
 from .QQCommand_anime import QQCommand_anime
 from .QQCommand_bird import QQCommand_bird
 from .QQCommand_cat import QQCommand_cat
@@ -144,7 +144,7 @@ from .QQCommand_mxh import QQCommand_mxh
 from .QQCommand_pixiv import QQCommand_pixiv
 from .QQCommand_random import QQCommand_random
 # from .QQCommand_share import QQCommand_share
-from .QQCommand_shorten import QQCommand_shorten
+# from .QQCommand_shorten import QQCommand_shorten
 from .QQCommand_tex import QQCommand_tex
 from .QQCommand_trash import QQCommand_trash
 from .QQCommand_waifu import QQCommand_waifu

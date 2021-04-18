@@ -12,6 +12,15 @@ import time
 import re
 from bs4 import BeautifulSoup
 
+itemAlterName = {
+    "G12" : "陈旧的缠尾蛟革地图",
+    "G11" : "陈旧的绿飘龙革地图",
+    "G10" : "陈旧的瞪羚革地图",
+    "G9"  : "陈旧的迦迦纳怪鸟革地图",
+    "G8"  : "陈旧的巨龙革地图",
+    "G7"  : "陈旧的飞龙革地图",
+
+}
 
 def localize_world_name(world_name):
     world_dict = {
@@ -116,18 +125,8 @@ def handle_item_name_abbr(item_name):
         item_name = item_name.replace("(", "（").replace(")", "）")
     if item_name.startswith("第二期重建用的") and not item_name.endswith("（检）"):
         item_name = item_name + "（检）"
-    if item_name.upper() == "G12":
-        item_name = "陈旧的缠尾蛟革地图"
-    if item_name.upper() == "G11":
-        item_name = "陈旧的绿飘龙革地图"
-    if item_name.upper() == "G10":
-        item_name = "陈旧的瞪羚革地图"
-    if item_name.upper() == "G9":
-        item_name = "陈旧的迦迦纳怪鸟革地图"
-    if item_name.upper() == "G8":
-        item_name = "陈旧的巨龙革地图图"
-    if item_name.upper() == "G7":
-        item_name = "陈旧的飞龙革地图"
+    if itemAlterName.get(item_name.upper()):
+        item_name = itemAlterName.get(item_name.upper())
     return item_name
 
 
@@ -142,7 +141,7 @@ Powered by https://universalis.app"""
         # if time.time() < user.last_api_time + user.api_interval:
         # print("current time:{}".format(time.time()))
         # print("last_api_time:{}".format(user.last_api_time))
-        if time.time() < user.last_api_time + 5:
+        if time.time() < user.last_api_time + 3:
             msg = "[CQ:at,qq={}] 技能冷却中，请勿频繁调用".format(user.user_id)
             return msg
         server = None
