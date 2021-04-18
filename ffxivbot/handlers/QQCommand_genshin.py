@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FFXIVBOT_ROOT = os.environ.get("FFXIVBOT_ROOT", BASE_DIR)
 GENSHIN_ARTIFACT_RATER_ROOT = os.path.join(FFXIVBOT_ROOT, "../../Genshin-Artifact-Rater/")
-GENSHIN_ARTIFACT_RATER_PYTHON = "/root/.pyenv/versions/venv-genshin/bin/python3.8"
+GENSHIN_ARTIFACT_RATER_PYTHON = "/srv/MigangHome/venvs/venv_genshin/bin/python"
 
 
 def QQCommand_genshin(*args, **kwargs):
