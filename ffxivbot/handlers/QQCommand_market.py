@@ -19,7 +19,6 @@ itemAlterName = {
     "G9"  : "陈旧的迦迦纳怪鸟革地图",
     "G8"  : "陈旧的巨龙革地图",
     "G7"  : "陈旧的飞龙革地图",
-
 }
 
 def localize_world_name(world_name):
