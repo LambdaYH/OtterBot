@@ -142,7 +142,7 @@ Powered by https://universalis.app"""
         # if time.time() < user.last_api_time + user.api_interval:
         # print("current time:{}".format(time.time()))
         # print("last_api_time:{}".format(user.last_api_time))
-        if time.time() < user.last_api_time + 15:
+        if time.time() < user.last_api_time + 5:
             msg = "[CQ:at,qq={}] 技能冷却中，请勿频繁调用".format(user.user_id)
             return msg
         server = None

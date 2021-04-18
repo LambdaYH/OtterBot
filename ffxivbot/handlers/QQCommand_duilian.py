@@ -13,7 +13,7 @@ import traceback
 
 
 def get_xialian(shanglian):
-    url = "https://duilian.msra.cn/app/CoupletsWS_V2.asmx/GetXiaLian"
+    url = "http://duilian.msra.cn/app/CoupletsWS_V2.asmx/GetXiaLian"
     data = {
         "shanglian": shanglian,
         "xialianLocker": "0" * len(shanglian),
@@ -36,7 +36,7 @@ def get_xialian(shanglian):
 
 
 def get_hengpi(shanglian, xialian):
-    url = "https://duilian.msra.cn/app/CoupletsWS_V2.asmx/GetHengPi"
+    url = "http://duilian.msra.cn/app/CoupletsWS_V2.asmx/GetHengPi"
     data = {"shanglian": shanglian, "xialian": xialian}
     r = requests.post(
         url=url,
@@ -78,7 +78,7 @@ def QQCommand_duilian(*args, **kwargs):
                 hengpi = ""
                 if shanglian and xialian:
                     hengpi = get_hengpi(shanglian, xialian)
-                msg = "{}\n{}\n{}".format(shanglian, xialian, hengpi)
+                msg = f"{shanglian}\n{xialian}\n{hengpi}"
 
         if type(msg) == str:
             msg = msg.strip()
