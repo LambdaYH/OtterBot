@@ -130,7 +130,7 @@ def QQGroupChat(*args, **kwargs):
             if user.exists():
                 user = user.first()
                 if user.last_chat_time + 5 > time.time():
-                    msg = "聊天太频繁啦！獭獭脑子转不过来了！！"
+                    msg = "聊天太频繁啦！米缸脑子转不过来了！！"
                     action = reply_message_action(receive, msg)
                     action_list.append(action)
                     return action_list
