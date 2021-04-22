@@ -54,6 +54,7 @@ def QQCommand_raid(*args, **kwargs):
                     wol_name=wol_name,
                     server_name=server.name,
                 )
+                data["stage"] = 4
                 msg += check_raid(
                     api_url="https://actff1.web.sdo.com/20180525HeroList/Server/HeroList190128.ashx",
                     raid_data=data,
