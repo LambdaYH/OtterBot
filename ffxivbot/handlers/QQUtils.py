@@ -270,7 +270,7 @@ def crawl_dps(boss, job, day=0, CN_source=False, dps_type="adps"):
             find_res = find_res[boss.cn_offset : lastNoZero]
         # print("found {} atk_res".format(len(find_res)))
         if day == -1:
-            day = len(find_res) - 1
+            day = lastNoZero
         if day <= lastNoZero:
             atk_res[str(perc)] = find_res[day]
         else:
