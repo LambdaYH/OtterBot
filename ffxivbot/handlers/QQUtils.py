@@ -234,7 +234,7 @@ def getSpecificWeatherTimes(
 
 
 def crawl_dps(boss, job, day=0, CN_source=False, dps_type="adps"):
-    print("boss:{} job:{} day:{}".format(boss, job, day))
+    # print("boss:{} job:{} day:{}".format(boss, job, day))
     fflogs_url = "https://www.fflogs.com/zone/statistics/table/{}/dps/{}/{}/8/{}/100/1000/7/{}/Global/{}/All/0/normalized/single/0/-1/?keystone=15&dpstype={}".format(
         boss.quest.quest_id,
         boss.boss_id,
@@ -244,11 +244,10 @@ def crawl_dps(boss, job, day=0, CN_source=False, dps_type="adps"):
         job.name,
         dps_type,
     )
-    print("fflogs url:{}".format(fflogs_url))
+    # print("fflogs url:{}".format(fflogs_url))
     s = requests.Session()
     s.headers.update({"referer": "https://www.fflogs.com"})
     r = s.get(url=fflogs_url, timeout=5)
-    tot_days = 0
     percentage_list = [10, 25, 50, 75, 95, 99, 100]
     atk_res = {}
     for perc in percentage_list:
@@ -258,19 +257,26 @@ def crawl_dps(boss, job, day=0, CN_source=False, dps_type="adps"):
             re_str = "series%s" % (perc) + r".data.push\([+-]?(0|([1-9]\d*))(\.\d+)?\)"
         ptn = re.compile(re_str)
         find_res = ptn.findall(r.text)
-        if CN_source and boss.cn_offset:
-            find_res = find_res[boss.cn_offset :]
-        # print("found {} atk_res".format(len(find_res)))
-        try:
-            if day == -1:
-                day = len(find_res) - 1
-            atk_res[str(perc)] = find_res[day]
-        except IndexError as e:
-            day = len(find_res)
-            if day:
-                atk_res[str(perc)] = find_res[-1]
+        if not find_res:
+            return "No data found"
+        lastNoZero = len(find_res) - 1
+        # remove last several zero data && To ensure performance, will only try at most 5 times
+        for i in range(5):
+            if find_res[lastNoZero][0] == '0':
+                lastNoZero -= 1
             else:
-                return "No data found"
+                break
+        if CN_source and boss.cn_offset:
+            find_res = find_res[boss.cn_offset : lastNoZero]
+        # print("found {} atk_res".format(len(find_res)))
+        if day == -1:
+            day = len(find_res) - 1
+        if day <= lastNoZero:
+            atk_res[str(perc)] = find_res[day]
+        else:
+            day = lastNoZero
+            atk_res[str(perc)] = find_res[lastNoZero]
+
         ss = atk_res[str(perc)][1] + atk_res[str(perc)][2]
         if ss == "":
             ss = "0"
