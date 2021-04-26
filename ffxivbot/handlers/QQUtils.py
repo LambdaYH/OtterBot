@@ -261,13 +261,10 @@ def crawl_dps(boss, job, day=0, CN_source=False, dps_type="adps"):
             return "No data found"
         if CN_source and boss.cn_offset:
             find_res = find_res[boss.cn_offset :]
-        # remove last several zero data && To ensure performance, will only try at most 5 times
+        # remove last several zero data
         lastNoZero = len(find_res) - 1
-        for i in range(5):
-            if find_res[lastNoZero][0] == '0':
-                lastNoZero -= 1
-            else:
-                break
+        while find_res[lastNoZero][0] == '0':
+            lastNoZero -= 1
         # print("found {} atk_res".format(len(find_res)))
         if day == -1:
             day = lastNoZero
