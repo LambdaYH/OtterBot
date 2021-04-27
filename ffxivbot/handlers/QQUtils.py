@@ -250,6 +250,7 @@ def crawl_dps(boss, job, day=0, CN_source=False, dps_type="adps"):
     r = s.get(url=fflogs_url, timeout=5)
     percentage_list = [10, 25, 50, 75, 95, 99, 100]
     atk_res = {}
+    lastNoZero = -1
     for perc in percentage_list:
         if perc == 100:
             re_str = "series" + r".data.push\([+-]?(0|([1-9]\d*))(\.\d+)?\)"
@@ -262,8 +263,9 @@ def crawl_dps(boss, job, day=0, CN_source=False, dps_type="adps"):
         if CN_source and boss.cn_offset:
             find_res = find_res[boss.cn_offset :]
         # remove last several zero data
-        lastNoZero = len(find_res) - 1
-        while find_res[lastNoZero][0] == '0':
+        if lastNoZero == -1:
+            lastNoZero = len(find_res) - 1
+        while lastNoZero >= 0 and find_res[lastNoZero][0] == '0':
             lastNoZero -= 1
         # print("found {} atk_res".format(len(find_res)))
         if day == -1:
