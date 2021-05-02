@@ -18,7 +18,7 @@ commands = {
     "/dice": 'DnD掷骰子（"/dice 3d12"）',
     "/pixiv": 'Pixiv相关功能（"/pixiv help"）',
     # "/music":"网易云音乐搜索（\"/music 届不到的恋\"）",
-    "/duilian": '对联（"/duilian 稻花香里说丰年"）',
+    # "/duilian": '对联（"/duilian 稻花香里说丰年"）',
     "/tex": '生成tex图片（"/tex e^{\\pi i}+1=0"）',
     "/gate": '挖宝选门（"/gate 3"）',
     "/treasure": "宝图搜寻",
@@ -128,7 +128,7 @@ from .QQCommand_bird import QQCommand_bird
 from .QQCommand_cat import QQCommand_cat
 from .QQCommand_chp import QQCommand_chp
 from .QQCommand_dice import QQCommand_dice
-from .QQCommand_duilian import QQCommand_duilian
+# from .QQCommand_duilian import QQCommand_duilian
 from .QQCommand_gakki import QQCommand_gakki
 from .QQCommand_gif import QQCommand_gif
 from .QQCommand_hhsh import QQCommand_hhsh  # be sure to come before /hh
