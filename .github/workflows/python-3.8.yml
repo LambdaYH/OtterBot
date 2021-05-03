@@ -5,9 +5,9 @@ name: Python 3.8
 
 on:
   push:
-    branches: [ master ]
+    branches: [ BaiduChat ]
   pull_request:
-    branches: [ master ]
+    branches: [ BaiduChat ]
 
 jobs:
   build:
