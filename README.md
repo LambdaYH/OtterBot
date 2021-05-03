@@ -1,6 +1,6 @@
 # OtterBot
 
-[![ActionsStatus](https://github.com/Bluefissure/OtterBot/workflows/Python%203.6/badge.svg)](https://github.com/Bluefissure/OtterBot/actions?query=workflow%3A%22Python+3.6%22) [![CodeFactor](https://www.codefactor.io/repository/github/bluefissure/otterbot/badge/master)](https://www.codefactor.io/repository/github/bluefissure/otterbot/overview/master) [![license](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/Bluefissure/OtterBot/blob/master/LICENSE)
+[![Python 3.8](https://github.com/LambdaYH/OtterBot/actions/workflows/python-3.8.yml/badge.svg)](https://github.com/LambdaYH/OtterBot/actions/workflows/python-3.8.yml) [![CodeFactor](https://www.codefactor.io/repository/github/bluefissure/otterbot/badge/master)](https://www.codefactor.io/repository/github/bluefissure/otterbot/overview/master) [![license](https://img.shields.io/badge/license-GPL-blue.svg)](https://github.com/Bluefissure/OtterBot/blob/master/LICENSE)
 
 A QQ bot for Final Fantasy XIV (mostly served for CN server).
 

@@ -19,7 +19,7 @@ jobs:
     - name: Setup Redis
       uses: zhulik/redis-action@1.1.0
     - name: Setup MySQL
-      uses: mirromutth/mysql-action@v1.1
+      uses: getong/mariadb-action@v1.1
       with:
         mysql database: FFXIV_DEV
         mysql user: FFXIV_DEV
