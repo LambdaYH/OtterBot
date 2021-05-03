@@ -86,13 +86,13 @@ def QQCommand_dps(*args, **kwargs):
                         CN_source = True
                         receive_msg = receive_msg.replace("CN", "", 1).replace(
                             "国服", "", 1
-                        )
+                        ).strip()
                     dps_type = "adps"
                     if "rdps" in receive_msg:
                         dps_type = "rdps"
-                        receive_msg = receive_msg.replace("rdps", "", 1)
+                        receive_msg = receive_msg.replace("rdps", "", 1).strip()
                     if "国际服" in receive_msg:
-                        receive_msg = receive_msg.replace("国际服", "day#-1")
+                        receive_msg = receive_msg.replace("国际服", "day#-1").strip()
                     if boss.frozen:
                         day = -1
                     if "day#" in receive_msg:
@@ -100,7 +100,7 @@ def QQCommand_dps(*args, **kwargs):
                         day = tmp_day
                         receive_msg = receive_msg.replace(
                             "day#{}".format(tmp_day), "", 1
-                        )
+                        ).strip()
                     atk_res = crawl_dps(
                         boss=boss_obj,
                         job=job_obj,
@@ -117,9 +117,9 @@ def QQCommand_dps(*args, **kwargs):
                         msg += atk_res
                     else:
                         day = atk_res.get("day", day)
-                        if receive_msg == "all" or receive_msg.strip() == "":
+                        if receive_msg == "all" or receive_msg == "":
                             atk_dict = atk_res
-                            print(json.dumps(atk_dict))
+                            # print(json.dumps(atk_dict))
                             percentage_list = [10, 25, 50, 75, 95, 99, 100]
                             msg = "{} {} {} day#{}:\n".format(
                                 boss.cn_name, job.cn_name, info_msg, day,
