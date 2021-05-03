@@ -1,3 +1,4 @@
+from typing import BinaryIO
 from .QQEventHandler import QQEventHandler
 from .QQUtils import *
 from FFXIV import settings
@@ -14,6 +15,8 @@ import time
 import redis
 import jieba
 from collections import Counter
+from .chatUtils import BaiduBot, getchat
+
 
 
 def QQGroupChat(*args, **kwargs):
@@ -22,12 +25,10 @@ def QQGroupChat(*args, **kwargs):
         group = kwargs.get("group", None)
         user_info = kwargs.get("user_info", None)
         QQ_BASE_URL = global_config.get("QQ_BASE_URL", None)
-        TULING_API_URL = global_config.get("TULING_API_URL", None)
-        TULING_API_KEY = global_config.get("TULING_API_KEY", None)
         ADMIN_ID = global_config.get("ADMIN_ID", "")
-        BOT_FATHER = global_config.get("BOT_FATHER", None)
-        BOT_MOTHER = global_config.get("BOT_MOTHER", None)
-        USER_NICKNAME = global_config.get("USER_NICKNAME", "小暗呆")
+        BAIDUCHAT_BOTID = global_config.get("BAIDUCHAT_BOTID", None)
+        BAIDUCHAT_API_KEY = global_config.get("BAIDUCHAT_API_KEY", None)
+        BAIDUCHAT_SECRET_KEY = global_config.get("BAIDUCHAT_SECRET_KEY", None)
         action_list = []
         receive = kwargs["receive"]
         bot = kwargs["bot"]
@@ -113,7 +114,7 @@ def QQGroupChat(*args, **kwargs):
             group_mem.update({"words": word_cnt})
             r.set(group_id_hash, json.dumps(group_mem))
 
-        # tuling chatbot
+        # baidu chatbot
         chat_enable = group_commands.get("/chat", "enable") != "disable"
         at_self_pattern = "\[CQ:at,qq={}(,text=.*)?\]".format(receive["self_id"])
         reply_pattern = "\[CQ:reply,id=.*?\]"
@@ -139,29 +140,9 @@ def QQGroupChat(*args, **kwargs):
             receive_msg = message
             receive_msg = re.sub(at_self_pattern, "", receive_msg)
             receive_msg = re.sub(reply_pattern, "", receive_msg)
-            tuling_data = {}
-            tuling_data["reqType"] = 0
-            tuling_data["perception"] = {"inputText": {"text": receive_msg}}
-            tuling_data["userInfo"] = {
-                "apiKey": TULING_API_KEY
-                if bot.tuling_token == ""
-                else bot.tuling_token,
-                "userId": receive["user_id"] if not wechat else ADMIN_ID,
-                "groupId": group.group_id,
-            }
-            r = requests.post(
-                url=TULING_API_URL, data=json.dumps(tuling_data), timeout=3
-            )
-            tuling_reply = r.json()
-            # logging.debug("tuling reply:%s"%(r.text))
-            msg = ""
-            for item in tuling_reply["results"]:
-                if item["resultType"] == "text":
-                    msg += item["values"]["text"]
-            if bot.tuling_token == "":
-                msg = msg.replace("图灵工程师爸爸", BOT_FATHER)
-                msg = msg.replace("图灵工程师妈妈", BOT_MOTHER)
-                msg = msg.replace("小主人", USER_NICKNAME)
+            bot = BaiduBot(API_Key=BAIDUCHAT_API_KEY, Secret_Key=BAIDUCHAT_SECRET_KEY, bot_id=BAIDUCHAT_BOTID, session=group.group_id if not wechat else ADMIN_ID)
+            r_msg = getchat(receive_msg, bot)
+            msg = r_msg['answer']
             msg = re.sub(url_pattern, "http://ff.sdo.com", msg)
             msg = "[CQ:at,qq=%s] " % (receive["user_id"]) + msg
             action = reply_message_action(receive, msg)
@@ -172,3 +153,5 @@ def QQGroupChat(*args, **kwargs):
         traceback.print_exc()
         logging.error(e)
     return []
+
+
