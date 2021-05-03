@@ -96,10 +96,12 @@ def QQCommand_dps(*args, **kwargs):
                     if boss.frozen:
                         day = -1
                     if "day#" in receive_msg:
-                        tmp_day = int(receive_msg.split(" ")[0].replace("day#", ""))
-                        day = tmp_day
+                        for s in receive_msg.split(" "):
+                            if "day#" in s:
+                                day = int(s.replace("day#", ""))
+                                break
                         receive_msg = receive_msg.replace(
-                            "day#{}".format(tmp_day), "", 1
+                            "day#{}".format(day), "", 1
                         ).strip()
                     atk_res = crawl_dps(
                         boss=boss_obj,
