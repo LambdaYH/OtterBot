@@ -14,7 +14,7 @@ import traceback
 
 def search_word(word):
     urlword = urllib.parse.quote(word)
-    url = "https://api.imjad.cn/cloudmusic/?type=search&s={}".format(urlword)
+    url = "https://pixiv.cinte.cc/api/netease/search?s={}".format(urlword)
     r = requests.get(url=url)
     jres = json.loads(r.text)
     status_code = jres["code"]
@@ -22,7 +22,7 @@ def search_word(word):
         songs = jres["result"]["songs"]
         song = songs[0]
         song_id = song["id"]
-        url = "https://api.imjad.cn/cloudmusic/?type=song&id={}".format(song_id)
+        url = "https://pixiv.cinte.cc/api/netease/song?id={}".format(song_id)
         r = requests.get(url=url)
         song_res = json.loads(r.text)
         song_data = song_res["data"][0]
@@ -57,7 +57,7 @@ def QQCommand_music(*args, **kwargs):
             msg = "default msg"
             if message_content.find("help") == 0 or message_content == "":
                 msg = (
-                    "/music $name : 搜索关键词$name的歌曲\n" + "Powered by https://api.imjad.cn"
+                    "/music $name : 搜索关键词$name的歌曲\n" + "Powered by https://github.com/mixmoe/HibiAPI"
                 )
             else:
                 word = message_content
