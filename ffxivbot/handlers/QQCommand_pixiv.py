@@ -157,7 +157,7 @@ def QQCommand_pixiv(*args, **kwargs):
                     + "/pixiv $img : 在P站以图搜图(用法参考/anime功能)\n"
                     + "/pixiv rank $mode : 随机返回一个排行榜的图片(可用mode: day, week, month等)\n"
                     + "PS: 利用此功能发送NSFW图片的行为请等同于调用命令者发送\n"
-                    + "Powered by https://pixiv.cinte.cc(基于https://github.com/mixmoe/HibiAPI), https://saucenao.com and http://ugoira.dataprocessingclub.org/"
+                    + "Powered by https://github.com/mixmoe/HibiAPI, https://saucenao.com and http://ugoira.dataprocessingclub.org/"
                 )
             elif message_content.find("rank") == 0:
                 mode = message_content.replace("rank", "", 1).strip()
