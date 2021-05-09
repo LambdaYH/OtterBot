@@ -80,8 +80,13 @@ def QQCommand_nuannuan(*args, **kwargs):
         except Exception as e:
             msg = "Error: {}".format(type(e))
             traceback.print_exc()
-        reply_action = reply_message_action(receive, msg)
-        action_list.append(reply_action)
+        if isinstance(msg, list):
+            for ms in msg:
+                reply_action = reply_message_action(receive, ms)
+                action_list.append(reply_action)
+        else:
+            reply_action = reply_message_action(receive, msg)
+            action_list.append(reply_action)
     except Exception as e:
         msg = "Error: {}".format(type(e))
         action_list.append(reply_message_action(receive, msg))
