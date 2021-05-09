@@ -62,20 +62,23 @@ def QQCommand_nuannuan(*args, **kwargs):
             if not res_data:
                 msg = "无法查询到有效数据，请稍后再试"
             else:
-                lineCount = 1
-                url = res_data["url"]
-                lineMsg = f"[第 1 页]\n{res_data['title']}\n"
-                lines = res_data["content"].split("\n")
-                msg = []
-                for line in lines:
-                    lineMsg += f"{line}\n"
-                    lineCount += 1
-                    if lineCount % 18 == 0:
-                        lineMsg = lineMsg.rstrip("\n")
-                        msg.append({"type": "text", "data": {"text": lineMsg}})
-                        lineMsg = f"[第 {int(lineCount / 18) + 1} 页]\n"
-                lineMsg += f"\n{url}"
-                msg.append({"type": "text", "data": {"text": lineMsg}})
+                if receive["message_type"] != "group":
+                    lineCount = 1
+                    url = res_data["url"]
+                    lineMsg = f"[第 1 页]\n{res_data['title']}\n"
+                    lines = res_data["content"].split("\n")
+                    msg = []
+                    for line in lines:
+                        lineMsg += f"{line}\n"
+                        lineCount += 1
+                        if lineCount % 18 == 0:
+                            lineMsg = lineMsg.rstrip("\n")
+                            msg.append({"type": "text", "data": {"text": lineMsg}})
+                            lineMsg = f"[第 {int(lineCount / 18) + 1} 页]\n"
+                    lineMsg += f"\n{url}"
+                    msg.append({"type": "text", "data": {"text": lineMsg}})
+                else:
+                    msg = [{"type": "share", "data": res_data}]
                 # print(msg)
         except Exception as e:
             msg = "Error: {}".format(type(e))
