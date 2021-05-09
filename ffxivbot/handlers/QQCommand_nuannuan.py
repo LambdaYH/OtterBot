@@ -62,7 +62,18 @@ def QQCommand_nuannuan(*args, **kwargs):
             if not res_data:
                 msg = "无法查询到有效数据，请稍后再试"
             else:
-                msg = [{"type": "share", "data": res_data}]
+                lineCount = 0
+                url = res_data["url"]
+                lineMsg = f"[第 1 页]\n{res_data['title']}\n"
+                lines = res_data["content"].split("\n")
+                msg = []
+                for line in lines:
+                    lineMsg += f"{line}\n"
+                    lineCount += 1
+                    if lineCount % 18 == 0:
+                        msg.append({"type": "text", "data": {"text": lineMsg}})
+                        lineMsg = f"[第 {lineCount / 18 + 1} 页]\n"
+                msg[-1]["data"]["text"] += f"\n{url}"
                 # print(msg)
         except Exception as e:
             msg = "Error: {}".format(type(e))
