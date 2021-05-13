@@ -60,7 +60,9 @@ def search_rank(mode, nsfw=False):
     url = "https://pixiv.cinte.cc/api/pixiv/rank?mode={}&date={}".format(mode, date)
     # print("url:{}====================".format(url))
     r = requests.get(url=url, timeout=(5, 30))
-    jres = json.loads(r.text)
+    jres = r.json()
+    if jres.get("code") == 422:
+        return f'未能找到排行榜"{mode}"'
     illusts = jres["illusts"]
     sfw_illusts = []
     if not nsfw:
