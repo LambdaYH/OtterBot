@@ -2,10 +2,7 @@ from .QQEventHandler import QQEventHandler
 from .QQUtils import *
 from ffxivbot.models import *
 import logging
-import json
-import random
 import requests
-import base64
 
 
 def check_contain_chinese(check_str):
@@ -21,55 +18,42 @@ def whatanime(receive, WHATANIME_API_URL):
     tmp = tmp.replace("url=", "")
     img_url = tmp.replace("]", "")
     logging.debug("getting img_url:%s" % (img_url))
-    r = requests.get(img_url, timeout=30)
-    imgb64 = base64.b64encode(r.content)
     logging.debug("whatanime post")
-    r2 = requests.post(
-        url=WHATANIME_API_URL, data={"image": imgb64.decode()}, timeout=30
-    )
+    r2 = requests.post(url=WHATANIME_API_URL, params={"url": img_url}, timeout=30)
     logging.debug("WhatAnime_res:\n%s" % (r2.text))
     if r2.status_code == 200:
         logging.debug("finished whatanime\nParsing.........")
-        json_res = json.loads(r2.text)
-        if len(json_res["docs"]) == 0:
+        json_res = r2.json()
+        if len(json_res["result"]) == 0:
             msg = "未找到所搜索的番剧"
         else:
-            anime = json_res["docs"][0]
-            title_list = ["title_chinese", "title", "title_native", "anime"]
-            title = ""
-            for item in anime["synonyms_chinese"]:
-                if item != "" and check_contain_chinese(item) and title == "":
-                    title = item
-                    break
-            for item in title_list:
-                if (
-                    anime[item] != ""
-                    and check_contain_chinese(anime[item])
-                    and title == ""
-                ):
-                    title = anime[item]
-                    break
-            for item in title_list:
-                if anime[item] != "" and title == "":
-                    title = anime[item]
-                    break
+            msg = ""
+            for anime in json_res["result"][:2]:
+                title = ""
+                for item in anime["anilist"]["synonyms"]:
+                    if item != "" and check_contain_chinese(item) and title == "":
+                        title = item
+                        break
+                if anime["anilist"]["title"]["native"] != "" and title == "":
+                    title = anime["anilist"]["title"]["native"]
 
-            duration = [
-                (int(anime["from"]) // 60, int(anime["from"]) % 60),
-                (int(anime["to"]) // 60, int(anime["to"]) % 60),
-            ]
-            msg = "%s\nEP#%s\n%s:%s-%s:%s\n相似度:%.2f%%" % (
-                title,
-                anime["episode"],
-                duration[0][0],
-                duration[0][1],
-                duration[1][0],
-                duration[1][1],
-                float(anime["similarity"]) * 100,
-            )
-            msg = msg + "\nPowered by https://trace.moe/"
+                duration = [
+                    (int(anime["from"]) // 60, int(anime["from"]) % 60),
+                    (int(anime["to"]) // 60, int(anime["to"]) % 60),
+                ]
+                msg_t = "%s\nEP#%s\n%s:%s-%s:%s\n相似度:%.2f%%" % (
+                    title,
+                    anime["episode"],
+                    duration[0][0],
+                    duration[0][1],
+                    duration[1][0],
+                    duration[1][1],
+                    float(anime["similarity"]) * 100,
+                )
+                msg += f"{msg_t}\n\n"
+            msg = msg + "Powered by https://trace.moe/"
     elif r2.status_code == 413:
-        msg = "图片太大啦，请压缩至1M"
+        msg = "图片太大啦，请压缩至10M"
     else:
         msg = "Error at whatanime API, status code %s" % (r2.status_code)
     return msg

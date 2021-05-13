@@ -5,7 +5,7 @@
   "SECRET_KEY": "pinkpink",
   "RANDOMORG_TOKEN": "",
   "WHATANIME_TOKEN": "",
-  "WHATANIME_API_URL": "https://trace.moe/api/search?token={}",
+  "WHATANIME_API_URL": "https://api.trace.moe/search?anilistInfo&key={}",
   "WEIBO_TOKEN": "",
   "WEIBO_SAFEURL": "",
   "SAUCENAO_API_KEY": "",
