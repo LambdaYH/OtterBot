@@ -145,7 +145,7 @@ def QQCommand_pixiv(*args, **kwargs):
         receive = kwargs["receive"]
         user = QQUser.objects.get(user_id=receive["user_id"])
 
-        if time.time() < user.last_api_time + 15:
+        if time.time() < user.last_api_time + 5:
             msg = "[CQ:at,qq={}] 技能冷却中".format(user)
         else:
             update_api_cooldown = False
