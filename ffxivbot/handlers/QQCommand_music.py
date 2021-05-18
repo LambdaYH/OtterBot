@@ -14,7 +14,7 @@ import traceback
 
 def search_word(word):
     urlword = urllib.parse.quote(word)
-    url = "https://pixiv.cinte.cc/api/netease/search?s={}".format(urlword)
+    url = "https://hibiapi.cinte.cc/api/netease/search?s={}".format(urlword)
     r = requests.get(url=url)
     jres = json.loads(r.text)
     status_code = jres["code"]
