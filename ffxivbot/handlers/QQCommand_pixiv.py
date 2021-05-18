@@ -14,7 +14,7 @@ import traceback
 
 def revproxy(url):
     original_domain = "i.pximg.net"
-    revproxy_domain = "pixiv.bluefissure.com"
+    revproxy_domain = "pixiv.cinte.cc"
     rev_url = url.replace(original_domain, revproxy_domain)
     return rev_url.replace("_webp", "")
 
@@ -57,7 +57,7 @@ def search_image(img_url, API, qq=None):
 def search_rank(mode, nsfw=False):
     the_day_before_yesterday_time = time.time() - 3600 * 24 * 2
     date = time.strftime("%Y-%m-%d", time.localtime(the_day_before_yesterday_time))
-    url = "https://pixiv.cinte.cc/api/pixiv/rank?mode={}&date={}".format(mode, date)
+    url = "https://hibiapi.cinte.cc/api/pixiv/rank?mode={}&date={}".format(mode, date)
     # print("url:{}====================".format(url))
     r = requests.get(url=url, timeout=(5, 30))
     jres = r.json()
@@ -83,7 +83,7 @@ def search_rank(mode, nsfw=False):
 
 def search_word(word, nsfw=False):
     urlword = urllib.parse.quote(word)
-    url = "https://pixiv.cinte.cc/api/pixiv/search?word={}&page=1".format(urlword)
+    url = "https://hibiapi.cinte.cc/api/pixiv/search?word={}&page=1".format(urlword)
     r = requests.get(url=url, timeout=(5, 30))
     jres = json.loads(r.text)
     illusts = jres["illusts"]
@@ -105,7 +105,7 @@ def search_word(word, nsfw=False):
 
 
 def search_ID(ID):
-    url = "https://pixiv.cinte.cc/api/pixiv/illust?id={}".format(ID)
+    url = "https://hibiapi.cinte.cc/api/pixiv/illust?id={}".format(ID)
     r = requests.get(url=url, timeout=(5, 30))
     jres = json.loads(r.text)
     if "error" in jres.keys():

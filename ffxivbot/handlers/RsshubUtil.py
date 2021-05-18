@@ -8,7 +8,7 @@ from io import BytesIO
 
 
 class RsshubUtil(object):
-    def __init__(self, rsshub_base="https://rsshub.bluefissure.com"):
+    def __init__(self, rsshub_base="https://rsshub.cinte.cc"):
         self.rsshub_base = rsshub_base
 
     def raw_parse(self, url, relative=True):
