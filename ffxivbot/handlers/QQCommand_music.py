@@ -22,7 +22,7 @@ def search_word(word):
         songs = jres["result"]["songs"]
         song = songs[0]
         song_id = song["id"]
-        url = "https://pixiv.cinte.cc/api/netease/song?id={}".format(song_id)
+        url = "https://hibiapi.cinte.cc/api/netease/song?id={}".format(song_id)
         r = requests.get(url=url)
         song_res = json.loads(r.text)
         song_data = song_res["data"][0]
