@@ -5,7 +5,6 @@ import logging
 import json
 import random
 import requests
-from bs4 import BeautifulSoup
 import urllib
 import logging
 import time
@@ -28,12 +27,13 @@ def is_nsfw(illust):
     return False
 
 
-def search_image(img_url, API, qq=None):
+def search_image(img_url, qq=None, api_key=""):
     url_img_url = urllib.parse.quote(img_url)
-    url = f"https://saucenao.com/search.php?db=5&output_type=2&testmode=1&numres=16&url={url_img_url}&api_key={API}"
+    url = f"https://saucenao.com/search.php?api_key={api_key}&db=5&output_type=2&testmode=1&numres=16&url={url_img_url}"
     r = requests.get(url=url, timeout=(5, 30))
     jres = json.loads(r.text)
-    print("++++++++++++++++++\n{}".format(json.dumps(jres)))
+    # print("++++++++++++++++++\n{}".format(json.dumps(jres)))
+    # print("++++++++++++++++++\n{}".format(url))
     msg = "default msg"
     if "results" in jres.keys() and jres["results"]:
         result = jres["results"][0]
@@ -137,10 +137,6 @@ def QQCommand_pixiv(*args, **kwargs):
     action_list = []
     try:
         global_config = kwargs["global_config"]
-        bot = kwargs["bot"]
-        QQ_BASE_URL = global_config["QQ_BASE_URL"]
-        FF14WIKI_API_URL = global_config["FF14WIKI_API_URL"]
-        FF14WIKI_BASE_URL = global_config["FF14WIKI_BASE_URL"]
         SAUCENAO_API_KEY = global_config["SAUCENAO_API_KEY"]
         receive = kwargs["receive"]
         user = QQUser.objects.get(user_id=receive["user_id"])
@@ -177,11 +173,8 @@ def QQCommand_pixiv(*args, **kwargs):
                 update_api_cooldown = True
             elif "CQ" in message_content and "url=" in message_content:
                 # print("matching image:{}".format(message_content))
-                tmp = message_content
-                tmp = tmp[tmp.find("url=") : -1]
-                tmp = tmp.replace("url=", "")
-                img_url = tmp.replace("]", "")
-                msg = search_image(img_url, SAUCENAO_API_KEY, receive["user_id"])
+                img_url = get_CQ_image(message_content)
+                msg = search_image(img_url, receive["user_id"], SAUCENAO_API_KEY)
                 update_api_cooldown = True
             else:
                 word = message_content

@@ -2,9 +2,6 @@ from .QQEventHandler import QQEventHandler
 from .QQUtils import *
 from ffxivbot.models import *
 import logging
-import json
-import random
-import requests
 
 
 def QQCommand_raid(*args, **kwargs):
@@ -62,13 +59,6 @@ def QQCommand_raid(*args, **kwargs):
                     wol_name=wol_name,
                     server_name=server.name,
                 )
-                # msg += check_raid(
-                #     api_url="http://act.ff.sdo.com/20171213HeroList/Server/HeroList171213.ashx",
-                #     raid_data=data,
-                #     raid_name="德尔塔幻境",
-                #     wol_name=wol_name,
-                #     server_name=server.name,
-                # )
                 msg = msg.strip()
 
         reply_action = reply_message_action(receive, msg)
