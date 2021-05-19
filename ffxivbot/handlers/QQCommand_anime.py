@@ -16,7 +16,10 @@ def check_contain_chinese(check_str):
 def whatanime(receive, WHATANIME_API_URL):
     img_url = get_CQ_image(receive["message"])
     url_img_url = urllib.parse.quote_plus(img_url)
-    r2 = requests.get(f"{WHATANIME_API_URL}&url={url_img_url}", timeout=10)
+    try:
+        r2 = requests.get(f"{WHATANIME_API_URL}&url={url_img_url}", timeout=15)
+    except requests.exceptions.Timeout:
+        return "搜索超时，请稍后重试"
     logging.debug("WhatAnime_res:\n%s" % (r2.text))
     if r2.status_code == 200:
         logging.debug("finished whatanime\nParsing.........")
