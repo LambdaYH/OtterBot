@@ -3,6 +3,7 @@ from .QQUtils import *
 from ffxivbot.models import *
 import logging
 import requests
+import urllib.parse
 
 
 def check_contain_chinese(check_str):
@@ -13,13 +14,9 @@ def check_contain_chinese(check_str):
 
 
 def whatanime(receive, WHATANIME_API_URL):
-    tmp = receive["message"]
-    tmp = tmp[tmp.find("url=") : -1]
-    tmp = tmp.replace("url=", "")
-    img_url = tmp.replace("]", "")
-    logging.debug("getting img_url:%s" % (img_url))
-    logging.debug("whatanime post")
-    r2 = requests.post(url=WHATANIME_API_URL, params={"url": img_url}, timeout=30)
+    img_url = get_CQ_image(receive["message"])
+    url_img_url = urllib.parse.quote_plus(img_url)
+    r2 = requests.get(f"{WHATANIME_API_URL}&url={url_img_url}", timeout=10)
     logging.debug("WhatAnime_res:\n%s" % (r2.text))
     if r2.status_code == 200:
         logging.debug("finished whatanime\nParsing.........")
