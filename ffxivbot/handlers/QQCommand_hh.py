@@ -18,14 +18,15 @@ from PIL import ImageFont
 from PIL import Image
 from PIL import ImageDraw
 
+# 反代 https://api.ffxivsc.cn -> http://hk.kuma.link
 
 def search_id(glamour_id):
     try:
-        glamour_url = "https://api.ffxivsc.cn/glamour/v1/getGlamourInfo?uid=&glamourId={}".format(
+        glamour_url = "http://hk.kuma.link/glamour/v1/getGlamourInfo?uid=&glamourId={}".format(
             glamour_id
         )
         headers = {
-            "Host": "api.ffxivsc.cn",
+            "Host": "hk.kuma.link",
             "Origin": "https://www.ffxivsc.cn",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36",
             "Referer": "https://www.ffxivsc.cn/page/glamour.html?glamourId={}".format(
@@ -146,18 +147,18 @@ def result_to_img(result, glamour_id, bot_version):
 def search_jr(job, race, sex, sort, time, bot_version, item_name, item_flag=False):
     try:
         headers = {
-            "Host": "api.ffxivsc.cn",
+            "Host": "hk.kuma.link",
             "Origin": "https://www.ffxivsc.cn",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36",
             "Referer": "https://www.ffxivsc.cn/page/glamourList.html",
             "Accept-Encoding": "gzip, deflate, br",
         }
         if item_flag:
-            src_url = "https://api.ffxivsc.cn/glamour/v1/librarySearchItem?language=zh&job={}&itemName={}&race={}&sex={}&sort=1&time=0".format(
+            src_url = "http://hk.kuma.link/glamour/v1/librarySearchItem?language=zh&job={}&itemName={}&race={}&sex={}&sort=1&time=0".format(
                 job, item_name, race, sex
             )
         else:
-            src_url = "https://api.ffxivsc.cn/glamour/v1/getLibraryFilterGlamours?job={}&race={}&sex={}&sort={}&time={}&pageNum=1".format(
+            src_url = "http://hk.kuma.link/glamour/v1/getLibraryFilterGlamours?job={}&race={}&sex={}&sort={}&time={}&pageNum=1".format(
                 job, race, sex, sort, time
             )
 
