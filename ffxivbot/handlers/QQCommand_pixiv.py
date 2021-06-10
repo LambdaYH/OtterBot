@@ -13,7 +13,7 @@ import traceback
 
 def revproxy(url):
     original_domain = "i.pximg.net"
-    revproxy_domain = "pixiv.cinte.cc"
+    revproxy_domain = "pixiv.cinte.workers.dev"
     rev_url = url.replace(original_domain, revproxy_domain)
     return rev_url.replace("_webp", "")
 
