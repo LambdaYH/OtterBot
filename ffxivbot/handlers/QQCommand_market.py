@@ -61,7 +61,7 @@ def get_item_id(item_name, name_lang=""):
         url = (
             "https://cafemaker.wakingsands.com/search?indexes=Item&string=" + item_name
         )
-    r = requests.get(url, timeout=(5, 20))
+    r = requests.get(url, timeout=(7, 20))
     j = r.json()
     if len(j["Results"]) > 0:
         return j["Results"][0]["Name"], j["Results"][0]["ID"]
