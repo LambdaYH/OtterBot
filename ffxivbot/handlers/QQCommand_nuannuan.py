@@ -62,7 +62,7 @@ def QQCommand_nuannuan(*args, **kwargs):
             if not res_data:
                 msg = "无法查询到有效数据，请稍后再试"
             else:
-                if receive["message_type"] != "group":
+                if receive["message_type"] != "group" and not receive.get("message", "").endswith("image"):
                     lineCount = 1
                     url = res_data["url"]
                     lineMsg = f"[第 1 页]\n{res_data['title']}\n"
@@ -79,6 +79,11 @@ def QQCommand_nuannuan(*args, **kwargs):
                     msg.append({"type": "text", "data": {"text": lineMsg}})
                 else:
                     msg = [{"type": "share", "data": res_data}]
+                    if receive.get("message", "").endswith("image"):
+                        res_str = "\n".join([res_data["title"], res_data["content"]])
+                        msg = text2img(res_str)
+                        msg += res_data["url"]
+                    
                 # print(msg)
         except Exception as e:
             msg = "Error: {}".format(type(e))
