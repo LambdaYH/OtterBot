@@ -62,39 +62,17 @@ def QQCommand_nuannuan(*args, **kwargs):
             if not res_data:
                 msg = "无法查询到有效数据，请稍后再试"
             else:
-                if receive["message_type"] != "group" and not receive.get("message", "").endswith("image"):
-                    lineCount = 1
-                    url = res_data["url"]
-                    lineMsg = f"[第 1 页]\n{res_data['title']}\n"
-                    lines = res_data["content"].split("\n")
-                    msg = []
-                    for line in lines:
-                        lineMsg += f"{line}\n"
-                        lineCount += 1
-                        if lineCount % 18 == 0:
-                            lineMsg = lineMsg.rstrip("\n")
-                            msg.append({"type": "text", "data": {"text": lineMsg}})
-                            lineMsg = f"[第 {int(lineCount / 18) + 1} 页]\n"
-                    lineMsg += f"\n{url}"
-                    msg.append({"type": "text", "data": {"text": lineMsg}})
-                else:
-                    msg = [{"type": "share", "data": res_data}]
-                    if receive.get("message", "").endswith("image"):
-                        res_str = "\n".join([res_data["title"], res_data["content"]])
-                        msg = text2img(res_str)
-                        msg += res_data["url"]
-                    
+                msg = [{"type": "share", "data": res_data}]
+                if receive.get("message", "").endswith("image"):
+                    res_str = "\n".join([res_data["title"], res_data["content"]])
+                    msg = text2img(res_str)
+                    msg += res_data["url"]
                 # print(msg)
         except Exception as e:
             msg = "Error: {}".format(type(e))
             traceback.print_exc()
-        if isinstance(msg, list) and len(msg) != 1:
-            for ms in msg:
-                reply_action = reply_message_action(receive, ms)
-                action_list.append(reply_action)
-        else:
-            reply_action = reply_message_action(receive, msg)
-            action_list.append(reply_action)
+        reply_action = reply_message_action(receive, msg)
+        action_list.append(reply_action)
     except Exception as e:
         msg = "Error: {}".format(type(e))
         action_list.append(reply_message_action(receive, msg))
