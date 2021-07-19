@@ -2,15 +2,10 @@ from .QQEventHandler import QQEventHandler
 from .QQUtils import *
 from ffxivbot.models import *
 import logging
-import json
-import random
-import dice
-import feedparser
 import traceback
 import requests
 import time
 import re
-from bs4 import BeautifulSoup
 
 itemAlterName = {
     "G12" : "陈旧的缠尾蛟革地图",
@@ -84,7 +79,7 @@ def get_market_data(server_name, item_name, hq=False):
             return msg
     url = "https://universalis.app/api/{}/{}".format(server_name, item_id)
     print("market url:{}".format(url))
-    r = requests.get(url, timeout=3)
+    r = requests.get(url, timeout=(7, 20))
     if r.status_code != 200:
         if r.status_code == 404:
             msg = "请确认所查询物品可交易且不可在NPC处购买\n"
